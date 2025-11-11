@@ -102,8 +102,8 @@ function createSpaceTheme() {
     
     if (!starsContainer || !planetsContainer) return;
     
-    // Create stars
-    const starCount = 200;
+    // Create stars - reduce count on mobile for performance
+    const starCount = window.innerWidth <= 768 ? 100 : 200;
     const sizes = ['small', 'medium', 'large'];
     
     for (let i = 0; i < starCount; i++) {
@@ -211,6 +211,7 @@ setTimeout(() => {
 }, 200);
 
 // Projects Data
+
 const projects = [
     {
         id: 1,
@@ -244,6 +245,21 @@ const projects = [
         tags: ['Project Management', 'PLM', 'SAP'],
         technologies: ['PLM Tools', 'SAP', 'Excel', 'Project Management'],
     },
+
+    {
+    id: 5,
+    title: 'Portfolio Generator',
+    description: 'Generate a professional portfolio website instantly from your resume — no coding required.',
+    longDescription: 'Created an AI-powered portfolio generator that builds a complete personal portfolio website in minutes. Users can upload their resume and profile photo, and the system automatically extracts data such as projects, experience, and skills using the Gemini API. The app then generates a responsive HTML portfolio with modern UI, TailwindCSS animations, and dark/light themes. This tool empowers non-developers to create sleek, professional portfolios without writing a single line of code.',
+    tags: ['AI Automation', 'Web Development', 'Portfolio Builder'],
+    technologies: ['HTML', 'Tailwind CSS', 'JavaScript', 'Gemini API', 'PDF.js'],
+    link: 'portfolio-generator.html', // change this if your live URL differs
+    demoLabel: 'View Live Demo'
+}
+
+
+
+
 ];
 
 // Experience/Timeline Data
@@ -360,7 +376,8 @@ function renderProjects() {
                 </div>
                 <div class="project-links">
                     ${project.githubUrl ? `<a href="${project.githubUrl}" target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()"><i class="fab fa-github"></i> Code</a>` : ''}
-                    ${project.liveUrl ? `<a href="${project.liveUrl}" target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()"><i class="fas fa-external-link-alt"></i> Live</a>` : ''}
+                    ${(project.liveUrl || project.link) ? `<a href="${project.liveUrl || project.link}" target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()"><i class="fas fa-external-link-alt"></i> ${project.demoLabel || 'Live'}</a>` : ''}
+
                     <button class="project-link view-details" onclick="event.stopPropagation(); const projectId = ${project.id}; openProjectModal(projectId);">
                         <i class="fas fa-info-circle"></i> Details
                     </button>
